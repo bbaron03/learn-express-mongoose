@@ -29,7 +29,17 @@ AuthorSchema
 
 // Virtual for author's lifespan
 AuthorSchema.virtual('lifespan').get(function() {
-  return `${this.date_of_birth.getFullYear()}-${this.date_of_death.getFullYear()}`;
+  let lifespan = "N/A-N/A";
+  if (this.date_of_birth && this.date_of_death) {
+    lifespan = `${this.date_of_birth.getFullYear()}-${this.date_of_death.getFullYear()}`;
+  }
+  else if (this.date_of_birth) {
+    lifespan = `${this.date_of_birth.getFullYear()}-N/A`;
+  }
+  else if (this.date_of_death) {
+    lifespan = `N/A-${this.date_of_death.getFullYear()}`;
+  }
+  return lifespan;
 });
 
 //Export model
